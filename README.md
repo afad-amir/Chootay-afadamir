@@ -7,6 +7,5 @@ Spring Boot Application (Inventory and sales management system) with REST Api's 
 2-> JDK
 #
 3-> STS(Spring Tool Suit) for Esclipes
-#
 # Setup steps
 
