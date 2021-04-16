@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title> Add User</title>
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Font-->
+    <link rel="stylesheet" type="text/css" href="register/css/opensans-font.css">
+    <link rel="stylesheet" type="text/css" href="register/fonts/line-awesome/css/line-awesome.min.css">
+    <!-- Jquery -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <!-- Main Style Css -->
+    <link rel="stylesheet" href="register/css/style.css" />
+</head>
+<style>
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        /* border-bottom: 1px dotted black; */
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 200px;
+        background-color: black;
+        color: #fff;
+        text-align: left;
+        border-radius: 6px;
+        padding: 5px 0;
+        font-size: 10px;
+        position: absolute;
+        z-index: 1;
+        top: -5px;
+        left: 105%;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+</style>
+
+<body class="form-v4">
+    <div class="page-content">
+        <div class="form-v4-content">
+            <div>
+
+            </div>
+            <div class="form-left">
+
+                <h2>Chootay Bike Shop</h2>
+                <ul>
+                    <li>
+                        <p class="text-1">Text Here</p>
+                    </li>
+                    <li>
+                        <p class="text-1">Text Here</p>
+                    </li>
+                    <li>
+                        <p class="text-1">Text Here</p>
+                    </li>
+                    <li>
+                        <p class="text-1">Text here</p>
+                    </li>
+
+                </ul>
+                <p class="text-2"><span>For more details:</span> Please send an email to support@chootay.com</p>
+                
+            </div>
+            <div class="form-detail" id="myform">
+                <h2>Add User</h2>
+                <div class="form-group">
+                    <div class="form-row form-row-1">
+                        <label for="username">First Name</label>
+                        <input type="text" name="username" id="firstname" autocomplete="off" class="input-text">
+                    </div>
+                    <div class="form-row form-row-1">
+                        <label for="userid">Last Name</label>
+                        <input type="text" name="userid" id="lastname" autocomplete="off" class="input-text">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="email">User Id</label>
+                    <input type="text" name="userid" id="userid" autocomplete="off" class="input-text" >
+                </div>
+                <div class="form-row">
+                    <label for="email">Your Email</label>
+                    <input type="text" name="email" id="email" autocomplete="off" class="input-text" required
+                        pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+                </div>
+                <div class="form-row-last">
+                    <input type="button" name="register" onclick="setGetParameter();" class="register" value="Add User">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+
+
+        function setGetParameter() {
+            var firstname = $('#firstname').val();
+            var lastname = $('#lastname').val();
+
+            var username = $('#userid').val();
+            var email = $('#email').val();
+            if (firstname != '' && email != ''&& username != '' && lastname!='') {
+                if (ValidateEmail(email)) { } else { toastr.error('Please Enter a valid Email'); return }
+
+                $.ajax({
+                    type: "POST",
+                    url: "users",
+                    contentType:"application/json",
+                    data: JSON.stringify({
+                        username: username,
+                        firstname: firstname,
+                        lastname: lastname,
+                        email: email,
+                        password: "123456"
+                    }),
+                    success: function (result) {
+                        if (result == 'success') {
+                            toastr.success("User added with default Password(123456).")
+                        } else {
+                            toastr.error("Invalid Request.");
+                        }
+                    }
+                });
+            } else {
+                toastr.error('Please Fill All Fields.');
+            }
+        }
+        
+            function ValidateEmail(mail) {
+            if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail)) {
+                return (true)
+            }
+            return (false)
+        }
+
+    </script>
+</body>
+
+</html>
